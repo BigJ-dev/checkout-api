@@ -23,22 +23,12 @@ public class CheckoutService {
     }
 
     public ResponseDto scan(RequestDto request) {
-       ResponseDto response = new ResponseDto();
-          response.setItems(request.getItems());
-          response.setTotalPrice();
-        List<ItemDto> collect = getDistinctItemCounts(request).entrySet().stream().map(p -> map(p)).collect(Collectors.toList());
-//        getDistinctItemCounts(request).entrySet().stream().forEach(entry ->{
-//            ItemDto item = map(entry);
-//            ItemDto itemTotalPrice = pricingService.getItemTotal(item);
-//
-//        });
-
-        return response;
+        List<ItemDto> items = getDistinctItemCounts(request);
+        return pricingService.getPricing(items);
     }
 
-    private Map<String, Long> getDistinctItemCounts(RequestDto request) {
-        return request.getItems().stream()
-                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    private List<ItemDto> getDistinctItemCounts(RequestDto request) {
+        Map<String, Long> distinctItems  = request.getItems().stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        return distinctItems.entrySet().stream().map(entry -> map(entry)).collect(Collectors.toList());
     }
-
 }

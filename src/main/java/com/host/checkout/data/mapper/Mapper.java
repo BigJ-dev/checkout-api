@@ -1,7 +1,10 @@
 package com.host.checkout.data.mapper;
 
 import com.host.checkout.data.dto.ItemDto;
+import com.host.checkout.data.dto.ResponseDto;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 public interface Mapper {
@@ -9,6 +12,13 @@ public interface Mapper {
         return ItemDto.builder()
                 .name(item.getKey())
                 .totalCount(item.getValue())
+                .build();
+    }
+
+    static ResponseDto mapToResponseDto(List<String> names, BigDecimal totalPrice) {
+        return ResponseDto.builder()
+                .items(names)
+                .totalPrice(totalPrice)
                 .build();
     }
 }
