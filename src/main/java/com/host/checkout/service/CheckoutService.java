@@ -6,6 +6,7 @@ import com.host.checkout.data.dto.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -22,19 +23,22 @@ public class CheckoutService {
     }
 
     public ResponseDto scan(RequestDto request) {
+       ResponseDto response = new ResponseDto();
+          response.setItems(request.getItems());
+          response.setTotalPrice();
+        List<ItemDto> collect = getDistinctItemCounts(request).entrySet().stream().map(p -> map(p)).collect(Collectors.toList());
+//        getDistinctItemCounts(request).entrySet().stream().forEach(entry ->{
+//            ItemDto item = map(entry);
+//            ItemDto itemTotalPrice = pricingService.getItemTotal(item);
+//
+//        });
 
-
-        getDistinctItemCounts(request).entrySet().stream().forEach(entry ->{
-            ItemDto item = map(entry);
-
-            Map<String, Integer> itemTotal = pricingService.getItemTotal(item);
-        });
-
-        return null;
+        return response;
     }
 
     private Map<String, Long> getDistinctItemCounts(RequestDto request) {
         return request.getItems().stream()
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
+
 }

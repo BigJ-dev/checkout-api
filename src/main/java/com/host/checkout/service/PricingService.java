@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,13 +19,39 @@ public class PricingService {
         this.pricingRuleRepo = pricingRuleRepo;
     }
 
-    public Map<String, Integer> getItemTotal(ItemDto item) {
-        String code = item.getName();
-        if(pricingRuleRepo.existsByCode(code)){
-            BigDecimal price = pricingRuleRepo.findPricingRuleByCode(code).getPrice();
+    public BigDecimal getItemsTotalPrice(List<ItemDto> items) {
+        BigDecimal totalPrice;
+
+                     items.stream()
+                    .filter(p -> pricingRuleRepo.existsByCode(p.getName()))
+                             .map(p-> )
+                             .
+
+
+        String ItemCode = item.getName();
+        if(pricingRuleRepo.existsByCode(ItemCode)){
+            BigDecimal price = pricingRuleRepo.findPricingRuleByCode(ItemCode).getPrice();
+            item.setTotalPrice(price.multiply(new BigDecimal(item.getTotalCount())));
         }
-        return null;
+        return item;
     }
+
+    private BigDecimal getTotalPrice(ItemDto item){
+        BigDecimal price = pricingRuleRepo.findPricingRuleByCode(item.getName()).getPrice();
+
+        return price;
+    }
+
+
+//    public ItemDto getItemTotal(ItemDto item) {
+//        String ItemCode = item.getName();
+//        if(pricingRuleRepo.existsByCode(ItemCode)){
+//            BigDecimal price = pricingRuleRepo.findPricingRuleByCode(ItemCode).getPrice();
+//            item.setTotalPrice(price.multiply(new BigDecimal(item.getTotalCount())));
+//        }
+//        return item;
+//    }
+
 
 //    private Map<String, Integer> itemCounts;
 //
