@@ -1,12 +1,11 @@
 package com.host.checkout.web;
 
+import com.host.checkout.data.dto.RequestDto;
+import com.host.checkout.data.dto.ResponseDto;
 import com.host.checkout.service.CheckoutService;
 import com.host.checkout.util.UtilFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +19,8 @@ public class ClientScanController {
         this.checkoutService = checkoutService;
     }
 
-    @PostMapping("/scan")
-    public ResponseEntity itemScanner(@RequestBody List<String> items) {
-        return ResponseEntity.ok(checkoutService.check(items));
+    @GetMapping(value =UtilFactory.Uri.POST_SCAN_ITEMS_URI)
+    public ResponseEntity<ResponseDto> itemScanner(@RequestBody RequestDto request) {
+        return ResponseEntity.ok(checkoutService.scan(request));
     }
 }

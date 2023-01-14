@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PricingRuleRepository extends JpaRepository<PricingRule, Long> {
+    PricingRule findPricingRuleByCode(String code);
+    boolean existsByCode(String code);
 }

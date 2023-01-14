@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -22,6 +23,6 @@ public class PricingRule {
     private Long id;
     private String code;
     private String name;
-    private double price;
+    private BigDecimal price;
     private String discountType;
 }
