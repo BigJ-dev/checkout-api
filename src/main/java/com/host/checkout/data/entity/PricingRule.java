@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Checkout {
+public class PricingRule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,4 +23,5 @@ public class Checkout {
     private String code;
     private String name;
     private double price;
+    private String discountType;
 }
