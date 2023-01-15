@@ -2,16 +2,17 @@ package com.host.checkout.data.mapper;
 
 import com.host.checkout.data.dto.ItemDto;
 import com.host.checkout.data.dto.ResponseDto;
+import com.host.checkout.data.entity.PricingRule;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 public interface Mapper {
-    static ItemDto map(Map.Entry<String, Long> item) {
+    static ItemDto mapToItem(Map.Entry<String, Long> item) {
         return ItemDto.builder()
                 .code(item.getKey())
-                .Count(item.getValue())
+                .quantity(item.getValue())
                 .build();
     }
 
@@ -20,5 +21,13 @@ public interface Mapper {
                 .items(names)
                 .totalPrice(totalPrice)
                 .build();
+    }
+
+    static ItemDto mapToItem(PricingRule rule, ItemDto item) {
+        item.setUnitPrice(rule.getPrice());
+        item.setDiscountType(rule.getDiscountType());
+        item.setTotalPrice(item.getUnitPrice().multiply(new BigDecimal(item.getQuantity())));
+
+        return item;
     }
 }

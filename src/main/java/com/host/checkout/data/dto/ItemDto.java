@@ -9,7 +9,8 @@ import java.math.BigDecimal;
 @Builder
 public class ItemDto {
     private String code;
-    private Long Count;
-    private BigDecimal Price;
+    private Long quantity;
+    private BigDecimal unitPrice;
+    private BigDecimal totalPrice;
     private String discountType;
 }

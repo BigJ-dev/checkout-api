@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.host.checkout.data.mapper.Mapper.map;
+import static com.host.checkout.data.mapper.Mapper.mapToItem;
 
 @Slf4j
 @Service
@@ -29,6 +29,6 @@ public class CheckoutService {
 
     private List<ItemDto> getDistinctItemCounts(RequestDto request) {
         Map<String, Long> distinctItems  = request.getItems().stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        return distinctItems.entrySet().stream().map(entry -> map(entry)).collect(Collectors.toList());
+        return distinctItems.entrySet().stream().map(entry -> mapToItem(entry)).collect(Collectors.toList());
     }
 }
