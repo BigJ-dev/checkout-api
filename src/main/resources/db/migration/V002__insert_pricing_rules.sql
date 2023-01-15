@@ -1,3 +1,3 @@
-INSERT INTO pricing_rule (id, code, name, price, discount_type, minimum_items, free_Item_total, discount_percentage) VALUES (1, 'MUG', 'Triggerise Mug', 4.00, 'bOGo', 2, 1, 0.0);
-INSERT INTO pricing_rule (id, code, name, price, discount_type, minimum_items, free_Item_total, discount_percentage) VALUES (2, 'TSHIRT', 'Triggerise Tshirt', 21.00, 'bulkPurchase', 3, null, 30.0);
-INSERT INTO pricing_rule (id, code, name, price, discount_type, minimum_items, free_Item_total, discount_percentage) VALUES (3, 'USBKEY', 'Triggerise USB Key ', 10.00, 'none', null, null, null);
+INSERT INTO pricing_rule (id, code, name, price, discount_type, minimum_items, free_Item_total, discount_percentage) VALUES (1, 'MUG', 'Triggerise Mug', 4.00, 'BxGyFree', 2, 1, 0.0);
+INSERT INTO pricing_rule (id, code, name, price, discount_type, minimum_items, free_Item_total, discount_percentage) VALUES (2, 'TSHIRT', 'Triggerise Tshirt', 21.00, 'bulkPurchase', 3, 0, 30.0);
+INSERT INTO pricing_rule (id, code, name, price, discount_type, minimum_items, free_Item_total, discount_percentage) VALUES (3, 'USBKEY', 'Triggerise USB Key ', 10.00, 'none', 0, 0, 0.0);
