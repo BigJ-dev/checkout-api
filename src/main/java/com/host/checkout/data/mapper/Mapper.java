@@ -23,9 +23,9 @@ public interface Mapper {
                 .build();
     }
 
-    static ItemDto mapToItem(PricingRule rule, ItemDto item) {
-        item.setUnitPrice(rule.getPrice());
-        item.setDiscountType(rule.getDiscountType());
+    static ItemDto mapToItem(PricingRule pricingRule, ItemDto item) {
+        item.setUnitPrice(pricingRule.getPrice());
+        item.setDiscountType(pricingRule.getDiscountType());
         item.setTotalPrice(item.getUnitPrice().multiply(new BigDecimal(item.getQuantity())));
 
         return item;

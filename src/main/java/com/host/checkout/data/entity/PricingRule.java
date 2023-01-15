@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,9 +22,10 @@ public class PricingRule {
     private String code;
     private String name;
     private BigDecimal price;
-
     private String discountType;
+
     private int minimumItems;
+    private int freeItemTotal;
     private double discountPercentage;
 
 }
