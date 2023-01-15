@@ -11,3 +11,14 @@ spring:
     username:
     password:
     driver-class-name: org.h2.Driver
+  flyway:
+    url: jdbc:h2:mem:checkoutdb
+    user: sa
+    password:
+    locations: classpath:db/migration/
+    baseline-on-migrate: true
+    enabled: true
+    schemas: public
+  jpa:
+    hibernate:
+      ddl-auto: none
