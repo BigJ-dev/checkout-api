@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class ItemDto {
-    private String name;
+    private String code;
     private Long Count;
     private BigDecimal Price;
     private String discountType;

@@ -17,15 +17,13 @@ public class PricingRule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private Long id;
     private String code;
     private String name;
     private BigDecimal price;
+
     private String discountType;
+    private int minimumItems;
+    private double discountPercentage;
 
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "id")
-    private Discount discount;
 }

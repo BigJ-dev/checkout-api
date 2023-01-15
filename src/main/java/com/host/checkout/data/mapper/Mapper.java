@@ -10,7 +10,7 @@ import java.util.Map;
 public interface Mapper {
     static ItemDto map(Map.Entry<String, Long> item) {
         return ItemDto.builder()
-                .name(item.getKey())
+                .code(item.getKey())
                 .Count(item.getValue())
                 .build();
     }
