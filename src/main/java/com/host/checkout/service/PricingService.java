@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.host.checkout.data.mapper.Mapper.mapToResponseDto;
 
@@ -38,7 +39,8 @@ public class PricingService {
 
     private BigDecimal applyPricing(ItemDto item) {
         BigDecimal price = pricingRuleRepo.findPricingRuleByCode(item.getName()).getPrice();
+        BigDecimal totalPrice = price.multiply(new BigDecimal(item.getCount()));
 
-        return price;
+        return totalPrice;
     }
 }

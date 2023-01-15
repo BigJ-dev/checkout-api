@@ -1,0 +1,1 @@
+INSERT INTO discount (id, discount_type, minimum_items, discount_percentage) VALUES (1, 'bulkPurchase', 3, 30);

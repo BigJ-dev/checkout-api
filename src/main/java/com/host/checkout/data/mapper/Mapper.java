@@ -11,7 +11,7 @@ public interface Mapper {
     static ItemDto map(Map.Entry<String, Long> item) {
         return ItemDto.builder()
                 .name(item.getKey())
-                .totalCount(item.getValue())
+                .Count(item.getValue())
                 .build();
     }
 

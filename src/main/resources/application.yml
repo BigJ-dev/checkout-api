@@ -18,7 +18,6 @@ spring:
     locations: classpath:db/migration/
     baseline-on-migrate: true
     enabled: true
-    schemas: public
   jpa:
     hibernate:
       ddl-auto: none
