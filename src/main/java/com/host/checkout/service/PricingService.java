@@ -43,7 +43,7 @@ public class PricingService {
         return totalPrice.subtract(discounts);
     }
 
-    private List<List<String>> getItemCodes(List<ItemDto> items) {
+    private List<String> getItemCodes(List<ItemDto> items) {
         return items.stream().map(p -> replicateItemCodes(p)).map(ItemDto::getReplicatedCodes).collect(Collectors.toList());
     }
 
@@ -53,7 +53,11 @@ public class PricingService {
         List<String> codes = IntStream.range(0, convertedQuantity)
                 .mapToObj(i -> dto.getCode())
                 .collect(Collectors.toList());
-        dto.setReplicatedCodes(codes);
+        dto.setReplicatedCodes(code(codes));
         return dto;
+    }
+
+    private String code(List<String> codes ){
+        return codes.toString().replace("[", "").replace("]", "");
     }
 }

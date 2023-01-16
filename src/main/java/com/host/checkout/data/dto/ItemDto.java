@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @Builder
@@ -14,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ItemDto {
     private String code;
-    private List<String> replicatedCodes;
+    private String replicatedCodes;
     private Long quantity;
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
