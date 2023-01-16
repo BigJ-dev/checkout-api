@@ -7,8 +7,6 @@ import com.host.checkout.util.UtilFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(UtilFactory.Uri.GET_BASE_URI)
 public class ClientScanController {

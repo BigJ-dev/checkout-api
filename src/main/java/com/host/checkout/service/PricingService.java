@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.host.checkout.data.mapper.Mapper.mapToResponseDto;
 
@@ -42,9 +43,17 @@ public class PricingService {
         return totalPrice.subtract(discounts);
     }
 
-    private List<String> getItemCodes(List<ItemDto> items) {
-        return items.stream().map(ItemDto::getCode).collect(Collectors.toList());
+    private List<List<String>> getItemCodes(List<ItemDto> items) {
+        return items.stream().map(p -> replicateItemCodes(p)).map(ItemDto::getReplicatedCodes).collect(Collectors.toList());
     }
 
+    private ItemDto replicateItemCodes(ItemDto dto) {
+        int convertedQuantity = Integer.valueOf(String.valueOf(dto.getQuantity()));
 
+        List<String> codes = IntStream.range(0, convertedQuantity)
+                .mapToObj(i -> dto.getCode())
+                .collect(Collectors.toList());
+        dto.setReplicatedCodes(codes);
+        return dto;
+    }
 }

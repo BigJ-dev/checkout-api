@@ -17,9 +17,9 @@ public interface Mapper {
                 .build();
     }
 
-    static ResponseDto mapToResponseDto(List<String> names, BigDecimal totalPrice) {
+    static ResponseDto mapToResponseDto(List<List<String>> codes, BigDecimal totalPrice) {
         return ResponseDto.builder()
-                .items(names)
+                .items(codes)
                 .totalPrice(totalPrice.toString().concat("€"))
                 .build();
     }

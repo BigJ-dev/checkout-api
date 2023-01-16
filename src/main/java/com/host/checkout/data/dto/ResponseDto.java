@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 @Builder
 public class ResponseDto {
-    private List<String> items;
+    private List<List<String>>  items;
     private String totalPrice;
 }
