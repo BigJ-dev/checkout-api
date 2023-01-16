@@ -20,33 +20,44 @@ public class DiscountService {
         this.pricingRuleRepo = pricingRuleRepo;
     }
 
-    public BigDecimal applyDiscount(ItemDto dto) {
+    public ItemDto applyDiscounts(ItemDto dto) {
         PricingRule pricingRule = pricingRuleRepo.findPricingRuleByCode(dto.getCode());
-        ItemDto item = mapToItem(pricingRule, dto);
+        ItemDto item = calculateItemDiscount(dto, pricingRule);
+        return item;
+    }
+
+    private ItemDto calculateItemDiscount(final ItemDto itemDto, final PricingRule pricingRule) {
+        ItemDto item = mapToItem(pricingRule, itemDto);
         if (DiscountTypes.BULK_PURCHASE.getDiscountType().equalsIgnoreCase(item.getDiscountType())) {
             applyBulkPurchaseDiscount(item, pricingRule);
         } else if (DiscountTypes.BUY_X_GET_Y_FREE.getDiscountType().equalsIgnoreCase(item.getDiscountType())) {
             applyBxGyFreeDiscount(item, pricingRule);
+        } else if (DiscountTypes.NONE.getDiscountType().equalsIgnoreCase(item.getDiscountType())) {
+            applyNoneDiscount(item);
         }
-        return item.getTotalPrice();
+        return item;
     }
 
-    private BigDecimal applyBulkPurchaseDiscount(final ItemDto item, final PricingRule rule) {
+    private ItemDto applyBulkPurchaseDiscount(final ItemDto item, final PricingRule rule) {
         BigDecimal discountPercentage = BigDecimal.valueOf(rule.getDiscountPercentage());
-
         if (item.getQuantity() >= rule.getMinimumItems()) {
-            item.setTotalPrice(item.getTotalPrice().multiply(discountPercentage).divide(new BigDecimal(100)));
+            BigDecimal discount = new BigDecimal(item.getQuantity()).multiply(item.getUnitPrice()).multiply(discountPercentage).divide(new BigDecimal(100));
+            item.setDiscount(discount);
         }
-        return item.getTotalPrice();
+        return item;
     }
 
-    private BigDecimal applyBxGyFreeDiscount(final ItemDto item, final PricingRule pricingRule) {
+    private ItemDto applyBxGyFreeDiscount(final ItemDto item, final PricingRule pricingRule) {
         if (item.getQuantity() >= pricingRule.getMinimumItems()) {
-            BigDecimal numDiscounts = new BigDecimal(item.getQuantity()).divide(new BigDecimal(2));
-            BigDecimal discount = numDiscounts.multiply(item.getUnitPrice());
-            BigDecimal totalPrice = new BigDecimal(item.getQuantity()).multiply(item.getUnitPrice()).subtract(discount);
-            item.setTotalPrice(totalPrice);
+            int freeItemQuantity = Math.toIntExact(item.getQuantity() / 2);
+            BigDecimal discount = new BigDecimal(freeItemQuantity).multiply(item.getUnitPrice());
+            item.setDiscount(discount);
         }
-        return item.getTotalPrice();
+        return item;
+    }
+
+    private ItemDto applyNoneDiscount(final ItemDto item) {
+        item.setDiscount(new BigDecimal(0.0));
+        return item;
     }
 }

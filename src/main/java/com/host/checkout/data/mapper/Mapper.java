@@ -7,6 +7,7 @@ import com.host.checkout.data.entity.PricingRule;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public interface Mapper {
     static ItemDto mapToItem(Map.Entry<String, Long> item) {
@@ -19,7 +20,7 @@ public interface Mapper {
     static ResponseDto mapToResponseDto(List<String> names, BigDecimal totalPrice) {
         return ResponseDto.builder()
                 .items(names)
-                .totalPrice(totalPrice)
+                .totalPrice(totalPrice.toString().concat("€"))
                 .build();
     }
 

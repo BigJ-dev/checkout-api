@@ -13,4 +13,5 @@ public class ItemDto {
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
     private String discountType;
+    private BigDecimal discount;
 }

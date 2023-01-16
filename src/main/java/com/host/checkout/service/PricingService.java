@@ -26,21 +26,25 @@ public class PricingService {
     }
 
     public ResponseDto getPricing(List<ItemDto> items) {
-        return mapToResponseDto(getItemCodes(items), getItemsTotalPrice(items));
+        List<ItemDto> itemDtoList = items.stream().filter(p -> pricingRuleRepo.existsByCode(p.getCode())).map(item -> applyPricing(item)).collect(Collectors.toList());
+        ResponseDto response = mapToResponseDto(getItemCodes(itemDtoList), getItemsTotalPrice(itemDtoList));
+        return response;
+    }
+
+    private ItemDto applyPricing(ItemDto dto) {
+        ItemDto item = discountService.applyDiscounts(dto);
+        return item;
     }
 
     private BigDecimal getItemsTotalPrice(List<ItemDto> items) {
-        return items.stream().filter(p -> pricingRuleRepo.existsByCode(p.getCode()))
-                .map(p -> applyPricing(p)).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal discounts = items.stream().map(ItemDto::getDiscount).collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add));
+        BigDecimal totalPrice = items.stream().map(ItemDto::getTotalPrice).collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add));
+        return totalPrice.subtract(discounts);
     }
 
     private List<String> getItemCodes(List<ItemDto> items) {
-        return items.stream().filter(p -> pricingRuleRepo.existsByCode(p.getCode()))
-                .map(ItemDto::getCode).collect(Collectors.toList());
+        return items.stream().map(ItemDto::getCode).collect(Collectors.toList());
     }
 
-    private BigDecimal applyPricing(ItemDto item) {
-        BigDecimal totalPrice = discountService.applyDiscount(item);
-        return totalPrice;
-    }
+
 }
