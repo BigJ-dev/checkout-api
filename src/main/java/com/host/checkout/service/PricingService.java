@@ -4,6 +4,7 @@ import com.host.checkout.data.dto.ItemDto;
 import com.host.checkout.data.dto.ResponseDto;
 import com.host.checkout.data.entity.PricingRule;
 import com.host.checkout.data.mapper.Mapper;
+import com.host.checkout.exception.ResourceNotFound;
 import com.host.checkout.repository.PricingRuleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,9 +40,23 @@ public class PricingService {
     }
 
     public PricingRule updateItem(Long itemId, PricingRule item){
-        PricingRule pricingRule = pricingRuleRepo.findById(itemId).orElseThrow(() -> new RuntimeException());
+        PricingRule pricingRule = pricingRuleRepo.findById(itemId).orElseThrow(() -> new ResourceNotFound("No item found, couldn't update"));
         Mapper.updateItem(item);
         return pricingRule;
+    }
+
+    public PricingRule deleteItem(Long itemId){
+        PricingRule pricingRule = pricingRuleRepo.findById(itemId).orElseThrow(() -> new ResourceNotFound("No item found, couldn't delete"));
+        pricingRuleRepo.delete(pricingRule);
+        return pricingRule;
+    }
+
+    public List<PricingRule> deleteAllItems(){
+        List<PricingRule> items = pricingRuleRepo.findAll().stream().collect(Collectors.toList());
+        if(items.isEmpty()){
+            throw new ResourceNotFound("No items exist, couldn't delete all");
+        }
+        return items;
     }
 
     public PricingRule addItem(PricingRule item){
