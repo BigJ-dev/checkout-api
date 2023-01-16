@@ -2,6 +2,8 @@ package com.host.checkout.service;
 
 import com.host.checkout.data.dto.ItemDto;
 import com.host.checkout.data.dto.ResponseDto;
+import com.host.checkout.data.entity.PricingRule;
+import com.host.checkout.data.mapper.Mapper;
 import com.host.checkout.repository.PricingRuleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,20 @@ public class PricingService {
         List<ItemDto> itemDtoList = items.stream().filter(p -> pricingRuleRepo.existsByCode(p.getCode())).map(item -> applyPricing(item)).collect(Collectors.toList());
         ResponseDto response = mapToResponseDto(getItemCodes(itemDtoList), getItemsTotalPrice(itemDtoList));
         return response;
+    }
+
+    public List<PricingRule> getAllProducts(){
+        return pricingRuleRepo.findAll();
+    }
+
+    public PricingRule updateItem(Long itemId, PricingRule item){
+        PricingRule pricingRule = pricingRuleRepo.findById(itemId).orElseThrow(() -> new RuntimeException());
+        Mapper.updateItem(item);
+        return pricingRule;
+    }
+
+    public PricingRule addItem(PricingRule item){
+       return pricingRuleRepo.save(item);
     }
 
     private ItemDto applyPricing(ItemDto dto) {

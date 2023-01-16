@@ -3,6 +3,7 @@ package com.host.checkout.service;
 import com.host.checkout.data.dto.ItemDto;
 import com.host.checkout.data.dto.RequestDto;
 import com.host.checkout.data.dto.ResponseDto;
+import com.host.checkout.data.entity.PricingRule;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

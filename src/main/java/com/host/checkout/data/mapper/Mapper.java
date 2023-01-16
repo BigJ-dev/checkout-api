@@ -23,6 +23,17 @@ public interface Mapper {
                 .build();
     }
 
+    static PricingRule updateItem(PricingRule item) {
+        return PricingRule.builder()
+                .code(item.getCode())
+                .name(item.getName())
+                .price(item.getPrice())
+                .discountType(item.getDiscountType())
+                .minimumItems(item.getMinimumItems())
+                .discountPercentage(item.getDiscountPercentage())
+                .build();
+    }
+
     static ItemDto mapToItem(PricingRule pricingRule, ItemDto item) {
         item.setUnitPrice(pricingRule.getPrice());
         item.setDiscountType(pricingRule.getDiscountType());
