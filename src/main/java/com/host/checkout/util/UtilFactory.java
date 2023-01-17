@@ -1,5 +1,7 @@
 package com.host.checkout.util;
 
+import java.util.List;
+
 public interface UtilFactory {
     class Uri {
         public final static String GET_BASE_URI = "/api/checkout-application";
@@ -9,5 +11,11 @@ public interface UtilFactory {
         public final static String PUT_ITEM_RULE_URI = "/update-item/{id}";
         public final static String DELETE_ITEM_RULE_URI = "/delete-item/{id}";
         public final static String DELETE_ALL_ITEM_RULE_URI = "/delete-all-items";
+    }
+
+    class Utils {
+        public static String convertArrayListToString(List<String> list) {
+            return list.toString().replace("[", "").replace("]", "");
+        }
     }
 }

@@ -28,12 +28,11 @@ public class DiscountService {
 
     private ItemDto calculateItemDiscount(final ItemDto itemDto, final PricingRule pricingRule) {
         ItemDto item = mapToItem(pricingRule, itemDto);
+
         if (DiscountTypes.BULK_PURCHASE.getDiscountType().equalsIgnoreCase(item.getDiscountType())) {
             applyBulkPurchaseDiscount(item, pricingRule);
         } else if (DiscountTypes.BUY_X_GET_Y_FREE.getDiscountType().equalsIgnoreCase(item.getDiscountType())) {
             applyBxGyFreeDiscount(item, pricingRule);
-        } else if (DiscountTypes.NONE.getDiscountType().equalsIgnoreCase(item.getDiscountType())) {
-            applyNoneDiscount(item);
         }
         return item;
     }
@@ -53,11 +52,6 @@ public class DiscountService {
             BigDecimal discount = new BigDecimal(freeItemQuantity).multiply(item.getUnitPrice());
             item.setDiscount(discount);
         }
-        return item;
-    }
-
-    private ItemDto applyNoneDiscount(final ItemDto item) {
-        item.setDiscount(new BigDecimal(0.0));
         return item;
     }
 }

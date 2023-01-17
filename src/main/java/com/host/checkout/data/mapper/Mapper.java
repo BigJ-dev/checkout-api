@@ -35,6 +35,7 @@ public interface Mapper {
     }
 
     static ItemDto mapToItem(PricingRule pricingRule, ItemDto item) {
+        item.setDiscount(new BigDecimal(0.0));
         item.setUnitPrice(pricingRule.getPrice());
         item.setDiscountType(pricingRule.getDiscountType());
         item.setTotalPrice(item.getUnitPrice().multiply(new BigDecimal(item.getQuantity())));

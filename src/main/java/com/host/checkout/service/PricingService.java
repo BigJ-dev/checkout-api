@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.host.checkout.data.mapper.Mapper.mapToResponseDto;
+import static com.host.checkout.util.UtilFactory.Utils.convertArrayListToString;
 
 @Slf4j
 @Service
@@ -85,11 +86,7 @@ public class PricingService {
         List<String> codes = IntStream.range(0, convertedQuantity)
                 .mapToObj(i -> dto.getCode())
                 .collect(Collectors.toList());
-        dto.setReplicatedCodes(code(codes));
+        dto.setReplicatedCodes(convertArrayListToString(codes));
         return dto;
-    }
-
-    private String code(List<String> codes) {
-        return codes.toString().replace("[", "").replace("]", "");
     }
 }
