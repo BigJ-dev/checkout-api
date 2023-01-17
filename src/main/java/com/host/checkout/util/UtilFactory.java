@@ -1,5 +1,8 @@
 package com.host.checkout.util;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 
 public interface UtilFactory {
@@ -16,6 +19,11 @@ public interface UtilFactory {
     class Utils {
         public static String convertArrayListToString(List<String> list) {
             return list.toString().replace("[", "").replace("]", "");
+        }
+
+        public static BigDecimal roundOff(BigDecimal value, int round){
+            BigDecimal roundedNumber = value.setScale(round, RoundingMode.HALF_UP);
+            return roundedNumber;
         }
     }
 }
