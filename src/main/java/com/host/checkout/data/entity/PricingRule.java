@@ -22,7 +22,6 @@ public class PricingRule {
     private String name;
     private BigDecimal price;
     private String discountType;
-
     private int minimumItems;
     private int freeItemTotal;
     private double discountPercentage;

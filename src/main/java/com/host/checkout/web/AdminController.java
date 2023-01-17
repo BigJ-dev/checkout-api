@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin-checkout")
+@RequestMapping(UtilFactory.Uri.GET_BASE_URI)
 public class AdminController {
     final PricingService pricingService;
 

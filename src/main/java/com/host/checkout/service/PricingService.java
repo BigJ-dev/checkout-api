@@ -35,32 +35,33 @@ public class PricingService {
         return response;
     }
 
-    public List<PricingRule> getAllProducts(){
+    public List<PricingRule> getAllProducts() {
         return pricingRuleRepo.findAll();
     }
 
-    public PricingRule updateItem(Long itemId, PricingRule item){
-        PricingRule pricingRule = pricingRuleRepo.findById(itemId).orElseThrow(() -> new ResourceNotFound("No item found, couldn't update"));
-        Mapper.updateItem(item);
-        return pricingRule;
+    public PricingRule updateItem(Long itemId, PricingRule pricingRule) {
+        PricingRule existingPricingRule = pricingRuleRepo.findById(itemId).orElseThrow(() -> new ResourceNotFound("No item found, couldn't update"));
+        Mapper.updateItem(existingPricingRule, pricingRule);
+        return pricingRuleRepo.save(existingPricingRule);
     }
 
-    public PricingRule deleteItem(Long itemId){
+    public PricingRule deleteItem(Long itemId) {
         PricingRule pricingRule = pricingRuleRepo.findById(itemId).orElseThrow(() -> new ResourceNotFound("No item found, couldn't delete"));
         pricingRuleRepo.delete(pricingRule);
         return pricingRule;
     }
 
-    public List<PricingRule> deleteAllItems(){
-        List<PricingRule> items = pricingRuleRepo.findAll().stream().collect(Collectors.toList());
-        if(items.isEmpty()){
+    public List<PricingRule> deleteAllItems() {
+        List<PricingRule> itemsTobeRemoved = pricingRuleRepo.findAll().stream().collect(Collectors.toList());
+        if (itemsTobeRemoved.isEmpty()) {
             throw new ResourceNotFound("No items exist, couldn't delete all");
         }
-        return items;
+        pricingRuleRepo.deleteAll();
+        return itemsTobeRemoved;
     }
 
-    public PricingRule addItem(PricingRule item){
-       return pricingRuleRepo.save(item);
+    public PricingRule addItem(PricingRule item) {
+        return pricingRuleRepo.save(item);
     }
 
     private ItemDto applyPricing(ItemDto dto) {
@@ -88,7 +89,7 @@ public class PricingService {
         return dto;
     }
 
-    private String code(List<String> codes ){
+    private String code(List<String> codes) {
         return codes.toString().replace("[", "").replace("]", "");
     }
 }
